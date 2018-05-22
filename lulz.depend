@@ -1,0 +1,75 @@
+# depslib dependency file v1.0
+1526990475 source:c:\users\borya\desktop\huitam\lulz\series.c
+	<stdio.h>
+	<stdlib.h>
+	"series.h"
+
+1526990655 c:\users\borya\desktop\huitam\lulz\series.h
+	<stdio.h>
+	<stdlib.h>
+	"mtm_ex3.h"
+
+1526990552 c:\users\borya\desktop\huitam\lulz\mtm_ex3.h
+	<stdio.h>
+	<stdbool.h>
+	"list.h"
+
+1525516637 c:\users\borya\desktop\huitam\lulz\list.h
+	<stdbool.h>
+
+1526990402 source:c:\users\borya\desktop\huitam\lulz\user.c
+	<stdio.h>
+	<stdlib.h>
+	"user.h"
+	"set.h"
+
+1526990384 c:\users\borya\desktop\huitam\lulz\user.h
+	<stdio.h>
+	<stdlib.h>
+
+1525516638 c:\users\borya\desktop\huitam\lulz\set.h
+	<stdbool.h>
+
+1526991409 source:c:\users\hp\documents\234122_2\loh\lulz\mtmflix.c
+	<stdio.h>
+	<stdlib.h>
+	"mtmflix.h"
+	"series.h"
+	"user.h"
+	"set.h"
+
+1526990969 c:\users\hp\documents\234122_2\loh\lulz\mtmflix.h
+	<stdio.h>
+	"mtm_ex3.h"
+
+1526990552 c:\users\hp\documents\234122_2\loh\lulz\mtm_ex3.h
+	<stdio.h>
+	<stdbool.h>
+	"list.h"
+
+1525516637 c:\users\hp\documents\234122_2\loh\lulz\list.h
+	<stdbool.h>
+
+1526990655 c:\users\hp\documents\234122_2\loh\lulz\series.h
+	<stdio.h>
+	<stdlib.h>
+	"mtm_ex3.h"
+
+1526990384 c:\users\hp\documents\234122_2\loh\lulz\user.h
+	<stdio.h>
+	<stdlib.h>
+
+1525516638 c:\users\hp\documents\234122_2\loh\lulz\set.h
+	<stdbool.h>
+
+1526990475 source:c:\users\hp\documents\234122_2\loh\lulz\series.c
+	<stdio.h>
+	<stdlib.h>
+	"series.h"
+
+1526990402 source:c:\users\hp\documents\234122_2\loh\lulz\user.c
+	<stdio.h>
+	<stdlib.h>
+	"user.h"
+	"set.h"
+
