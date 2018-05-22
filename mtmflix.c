@@ -41,22 +41,22 @@ MtmFlixResult mtmFlixAddUser(MtmFlix mtmflix, const char* username, int age){
         }
         return MTMFLIX_ILLEGAL_USERNAME;
     }
-    if(counter==0) return MTMFLIX_ILLEGAL_USERNAME
-    User user=userCreate();
-    setUserName(user, username);
-    setUserAge(user, age);
-    if(setIsIn(mtmflix->users, user)){
+    if(counter==0) return MTMFLIX_ILLEGAL_USERNAME;
+    User user_tmp=userCreate();
+    setUserName(user_tmp, username);
+    setUserAge(user_tmp, age);
+    if(setIsIn(mtmflix->users, user_tmp)){
         return MTMFLIX_USERNAME_ALREADY_USED;
     }
-    setAdd(mtmflix->users, user);
+    setAdd(mtmflix->users, user_tmp);
     return MTMFLIX_SUCCESS;
 }
 
 MtmFlixResult mtmFlixRemoveUser(MtmFlix mtmflix, const char* username){
-    User user=userCreate();
-    SET_FOREACH(User, user, mtmflix->users){
-        if(getUserName(user)==username){
-            setRemove(mtmflix->users, user);
+    User user_tmp=userCreate();
+    SET_FOREACH(User, user_tmp, mtmflix->users){
+        if(getUserName(user_tmp)==username){
+            setRemove(mtmflix->users, user_tmp);
         }
     }
 }
@@ -65,6 +65,8 @@ MtmFlixResult mtmFlixAddSeries(MtmFlix mtmflix, const char* name, int episodesNu
     if(name == NULL || mtmflix == NULL){
         return MTMFLIX_NULL_ARGUMENT;
     }
+    if(episodesNum<=0) return MTMFLIX_ILLEGAL_EPISODES_NUM;
+    if(episodeDuration<=0) return MTMFLIX_ILLEGAL_EPISODES_DURATION;
     int counter = 0;
     for(int i=0; i<(int)strlen(name); i++){
         if((name[i]<=90 && name[i]>=65)||(name[i]>=97 && name[i]<=122)){
@@ -76,12 +78,18 @@ MtmFlixResult mtmFlixAddSeries(MtmFlix mtmflix, const char* name, int episodesNu
         }
         return MTMFLIX_ILLEGAL_SERIES_NAME;
     }
-    if(counter==0) return MTMFLIX_ILLEGAL_SERIES_NAME
-    Series series = seriesCreate();
-    setSeriesAges(series, ages);
-    setSeriesEpisodeDuration(series, episodeDuration);
-    setSeriesEpisodesNum(series, episodesNum);
-    setSeriesGenre(series, genre);
-    setSeriesName(series, name);
+    if(counter==0) return MTMFLIX_ILLEGAL_SERIES_NAME;
+    Series series_tmp = seriesCreate();
+    setSeriesAges(series_tmp, ages);
+    setSeriesEpisodeDuration(series_tmp, episodeDuration);
+    setSeriesEpisodesNum(series_tmp, episodesNum);
+    setSeriesGenre(series_tmp, genre);
+    setSeriesName(series_tmp, name);
+    if(setIsIn(mtmflix->series, series_tmp)){
+        return MTMFLIX_SERIES_ALREADY_EXISTS;
+    }
+    setAdd(mtmflix->series, series_tmp);
     return MTMFLIX_SUCCESS;
 }
+
+MtmFlixResult mtmFlixRemoveSeries(MtmFlix mtmflix, const char* name);
