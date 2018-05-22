@@ -53,3 +53,7 @@ void setSeriesAges(Series series, int* ages){
 void setSeriesEpisodeDuration(Series series, int episodeDuration){
     series->episodeDuration = episodeDuration;
 }
+
+const char* getSeriesName(Series series){
+    return series->name
+}
