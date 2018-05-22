@@ -92,4 +92,11 @@ MtmFlixResult mtmFlixAddSeries(MtmFlix mtmflix, const char* name, int episodesNu
     return MTMFLIX_SUCCESS;
 }
 
-MtmFlixResult mtmFlixRemoveSeries(MtmFlix mtmflix, const char* name);
+MtmFlixResult mtmFlixRemoveSeries(MtmFlix mtmflix, const char* name){
+    User series_tmp=seriesCreate();
+    SET_FOREACH(Series, series_tmp, mtmflix->series){
+        if(getSeriesName(series_tmp)==name){
+            setRemove(mtmflix->series, series_tmp);
+        }
+    }
+}
