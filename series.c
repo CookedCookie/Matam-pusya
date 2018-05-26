@@ -57,3 +57,15 @@ void setSeriesEpisodeDuration(Series series, int episodeDuration){
 const char* getSeriesName(Series series){
     return series->name
 }
+
+Genre getSeriesGenre(Series series) {
+    return series->genre;
+}
+
+int getMinimalAge(Series series) {
+    return series->ages[0];
+}
+
+int getMaximalAge(Series series) {
+    return series->ages[1];
+}

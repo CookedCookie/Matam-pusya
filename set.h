@@ -166,7 +166,7 @@ SetResult setAdd(Set set, SetElement element);
 /**
 * 	setRemove: Removes an element from the set. The element is found using the
 * 	comparison function given at initialization. Once found, the element is
-* 	removed and deallocated using the free function supplied at initialzation.
+* 	removed and deallocated using the free function supplied at initialization.
 *  Iterator's value is undefined after this operation.
 *
 * @param set -

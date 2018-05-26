@@ -14,8 +14,11 @@ struct mtmFlix_t {
 
 MtmFlix mtmFlixCreate() {
     MtmFlix mtmFlix = malloc(sizeof(*mtmFlix));
-    mtmFlix->series = setCreate();
-    mtmFlix->users = setCreate();
+    copySetElements* tmp_copySetElements = malloc(sizeof(*tmp_copySetElements));
+    freeSetElements* tmp_freeSetElements = malloc(sizeof(*tmp_freeSetElements));
+    compareSetElements* tmp_compareSetElements = malloc(sizeof(*tmp_compareSetElements));
+    mtmFlix->series = setCreate(*tmp_copySetElements, *tmp_freeSetElements, *tmp_compareSetElements);
+    mtmFlix->users = setCreate(*tmp_copySetElements, *tmp_freeSetElements, *tmp_compareSetElements);
     return mtmFlix;
 }
 
@@ -59,6 +62,7 @@ MtmFlixResult mtmFlixRemoveUser(MtmFlix mtmflix, const char* username){
             setRemove(mtmflix->users, user_tmp);
         }
     }
+    return MTMFLIX_SUCCESS;
 }
 
 MtmFlixResult mtmFlixAddSeries(MtmFlix mtmflix, const char* name, int episodesNum, Genre genre, int* ages, int episodeDuration){
@@ -93,10 +97,157 @@ MtmFlixResult mtmFlixAddSeries(MtmFlix mtmflix, const char* name, int episodesNu
 }
 
 MtmFlixResult mtmFlixRemoveSeries(MtmFlix mtmflix, const char* name){
-    User series_tmp=seriesCreate();
+    Series series_tmp=seriesCreate();
     SET_FOREACH(Series, series_tmp, mtmflix->series){
         if(getSeriesName(series_tmp)==name){
             setRemove(mtmflix->series, series_tmp);
         }
     }
+    return MTMFLIX_SUCCESS;
+}
+
+MtmFlixResult mtmFlixReportSeries(MtmFlix mtmflix, int seriesNum, FILE* outputStream) {
+    Set tmp_set = setCopy(mtmflix->series);
+    Series* tmp_series = malloc(sizeof(*tmp_series));
+    Series* tmp_series2 = malloc(sizeof(*tmp_series2));
+    Genre* cur_genre = malloc(sizeof(*cur_genre));
+    cur_genre = COMEDY;
+    bool flag = false;
+    SET_FOREACH(Series, tmp_series, tmp_set){
+        if(getSeriesGenre(tmp_series) != COMEDY){
+            setRemove(tmp_set, tmp_series);
+        }
+    }
+    SET_FOREACH(Series, tmp_series, tmp_set) {
+        SET_FOREACH(Series, tmp_series2, tmp_set) {
+            if(tmp_series == tmp_series2)
+                flag = true;
+            if(strcmp(getSeriesName(tmp_series), getSeriesName(tmp_series2)) > 0 && ) {
+                tmp_series = tmp_series2;
+            }
+        }
+    }
+}
+
+MtmFlixResult mtmFlixSeriesJoin(MtmFlix mtmflix, const char* username, const char* seriesName) {
+    if(username == NULL || seriesName == NULL || mtmflix == NULL) {
+        return MTMFLIX_NULL_ARGUMENT;
+    }
+    bool flag = false;
+    Series* tmp_series = malloc(sizeof(*tmp_series));
+    SET_FOREACH(Series, tmp_series, mtmflix->series) {
+        if(strcmp(getSeriesName(tmp_series), seriesName) == 0) {
+            flag = true;
+            break;
+        }
+    }
+    if(!flag) {
+        return MTMFLIX_SERIES_DOES_NOT_EXIST;
+    }
+    flag = false;
+    User* tmp_user = malloc(sizeof(*tmp_user));
+    SET_FOREACH(User, tmp_users, mtmflix->users) {
+        if(strcmp(getUserName(tmp_user), username) == 0) {
+            flag = true;
+            break;
+        }
+    }
+    if(!flag) {
+        return MTMFLIX_USER_DOES_NOT_EXIST;
+    }
+    if(getAge(tmp_user) < getMinimalAge(tmp_user) || getAge(tmp_user) > getMaximalAge(tmp_user)) {
+        return MTMFLIX_USER_NOT_IN_THE_RIGHT_AGE;
+    }
+    addFavoriteMovie(tmp_user, tmp_series);
+    return MTMFLIX_SUCCESS;
+}
+
+MtmFlixResult mtmFlixSeriesLeave(MtmFlix mtmflix, const char* username, const char* seriesName) {
+    if(username == NULL || seriesName == NULL || mtmflix == NULL) {
+        return MTMFLIX_NULL_ARGUMENT;
+    }
+    bool flag = false;
+    User* tmp_user = malloc(sizeof(*tmp_user));
+    SET_FOREACH(User, tmp_users, mtmflix->users) {
+        if(strcmp(getUserName(tmp_user), username) == 0) {
+            flag = true;
+            break;
+        }
+    }
+    if(!flag) {
+        return MTMFLIX_USER_DOES_NOT_EXIST;
+    }
+    flag = false;
+    Series* tmp_series = malloc(sizeof(*tmp_series));
+    SET_FOREACH(Series, tmp_series, mtmflix->series) {
+        if(strcmp(getSeriesName(tmp_series), seriesName) == 0) {
+            setRemove(getFavoriteMovies(tmp_user), tmp_series);
+            flag = true;
+            break;
+        }
+    }
+    if(!flag) {
+        return MTMFLIX_SERIES_DOES_NOT_EXIST;
+    }
+    return MTMFLIX_SUCCESS;
+}
+
+MtmFlixResult mtmFlixAddFriend(MtmFlix mtmflix, const char* username1, const char* username2) {
+    if(mtmflix == NULL || username1 == NULL || username2 == NULL) {
+        return MTMFLIX_NULL_ARGUMENT;
+    }
+    bool flag = false;
+    User* tmp_user1 = malloc(sizeof(*tmp_user));
+    SET_FOREACH(User, tmp_users, mtmflix->users) {
+        if(strcmp(getUserName(tmp_user), username1) == 0) {
+            flag = true;
+            break;
+        }
+    }
+    if(!flag) {
+        return MTMFLIX_USER_DOES_NOT_EXIST;
+    }
+    flag = false;
+    User* tmp_user2 = malloc(sizeof(*tmp_user));
+    SET_FOREACH(User, tmp_users, mtmflix->users) {
+        if(strcmp(getUserName(tmp_user), username2) == 0) {
+            flag = true;
+            break;
+        }
+    }
+    if(!flag) {
+        return MTMFLIX_USER_DOES_NOT_EXIST;
+    }
+    setAdd(getFriends(tmp_user1), tmp_user2);
+    return MTMFLIX_SUCCESS;
+}
+
+MtmFlixResult mtmFlixRemoveFriend(MtmFlix mtmflix, const char* username1, const char* username2) {
+    if(mtmflix == NULL || username1 == NULL || username2 == NULL) {
+        return MTMFLIX_NULL_ARGUMENT;
+    }
+    bool flag = false;
+    User* tmp_user1 = malloc(sizeof(*tmp_user));
+    SET_FOREACH(User, tmp_users, mtmflix->users) {
+        if(strcmp(getUserName(tmp_user), username1) == 0) {
+            flag = true;
+            break;
+        }
+    }
+    if(!flag) {
+        return MTMFLIX_USER_DOES_NOT_EXIST;
+    }
+    flag = false;
+    User* tmp_user2 = malloc(sizeof(*tmp_user));
+    SET_FOREACH(User, tmp_users, mtmflix->users) {
+        if(strcmp(getUserName(tmp_user), username2) == 0) {
+            flag = true;
+            break;
+        }
+    }
+    if(!flag) {
+        return MTMFLIX_USER_DOES_NOT_EXIST;
+    }
+    setRemove(getFriends(tmp_user1), tmp_user2);
+    return MTMFLIX_SUCCESS;
 }

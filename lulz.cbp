@@ -22,11 +22,26 @@
 				</Compiler>
 			</Target>
 		</Build>
-		<Unit filename="Untitled3.c">
+		<Unit filename="Untitled1.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="list.h" />
+		<Unit filename="map.h" />
 		<Unit filename="mtm_ex3.h" />
+		<Unit filename="mtm_ex3.o" />
+		<Unit filename="mtmflix.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="mtmflix.h" />
+		<Unit filename="series.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="series.h" />
+		<Unit filename="set.h" />
+		<Unit filename="user.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="user.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

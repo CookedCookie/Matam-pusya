@@ -73,3 +73,35 @@
 	"user.h"
 	"set.h"
 
+1527000519 source:c:\users\borya\desktop\matam-pusya-master\series.c
+	<stdio.h>
+	<stdlib.h>
+	"series.h"
+	<string.h>
+
+1527000519 c:\users\borya\desktop\matam-pusya-master\series.h
+	<stdio.h>
+	<stdlib.h>
+	"mtm_ex3.h"
+
+1527000519 c:\users\borya\desktop\matam-pusya-master\mtm_ex3.h
+	<stdio.h>
+	<stdbool.h>
+	"list.h"
+
+1527000519 c:\users\borya\desktop\matam-pusya-master\list.h
+	<stdbool.h>
+
+1527000519 source:c:\users\borya\desktop\matam-pusya-master\user.c
+	<stdio.h>
+	<stdlib.h>
+	"user.h"
+	"set.h"
+
+1527000519 c:\users\borya\desktop\matam-pusya-master\user.h
+	<stdio.h>
+	<stdlib.h>
+
+1527000519 c:\users\borya\desktop\matam-pusya-master\set.h
+	<stdbool.h>
+
